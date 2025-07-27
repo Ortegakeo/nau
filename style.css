@@ -26,6 +26,8 @@ h1 {
   font-size: 1.1em;
   font-weight: bold;
   color: #555;
+  border-top: 2px dashed #777;
+  padding-top: 10px;
 }
 
 /* Tarjetas */
