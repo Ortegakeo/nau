@@ -15,47 +15,58 @@ h1 {
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
+  position: relative;
 }
 
+/* Línea divisoria cambio de carrera */
+#linea-cambio {
+  width: 100%;
+  text-align: center;
+  margin: 30px 0 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Tarjetas */
 .ramo-card {
-  background: #e0e0e0;
   padding: 15px;
   border-radius: 10px;
   width: 250px;
   min-height: 120px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.2s;
+  user-select: none;
+  border: 2px solid transparent;
 }
 
 .ramo-card:hover {
   transform: scale(1.03);
 }
 
-.ramo-card.habilitado {
-  background-color: #d0f5d3;
+/* Colores por estado */
+.ramo-card.bloqueado {
+  background: #eeeeee;
+  color: #999;
+  border-color: #ccc;
 }
 
-.ramo-card.bloqueado {
-  background-color: #f8d0d0;
-  opacity: 0.6;
+.ramo-card.habilitado {
+  background: #d0eaff;
+  color: #003366;
+  border-color: #0077cc;
 }
 
 .ramo-card.aprobado {
-  background-color: #c1e3ff;
+  background: #d6f8d6;
+  color: #2e6b2e;
+  border-color: #46c646;
   text-decoration: line-through;
 }
 
-button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  background: #0077cc;
-  color: white;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: gray;
-  cursor: not-allowed;
+.ramo-card.reprobado {
+  background: #fbd6d6;
+  color: #660000;
+  border-color: #cc0000;
 }
