@@ -1,55 +1,91 @@
-// Asignaturas combinadas: 1er año de Pedagogía en Inglés, luego Parvularia
 const malla = [
-  // Año 1 - Pedagogía en Inglés
-  { id: "fon1", ramo: "Fonética Inglesa I", semestre: 1, prereq: [] },
-  { id: "gram1", ramo: "Gramática Inglesa I", semestre: 1, prereq: [] },
-  { id: "psicoEd", ramo: "Psicología Educacional", semestre: 1, prereq: [] },
-  { id: "fon2", ramo: "Fonética Inglesa II", semestre: 2, prereq: ["fon1"] },
-  { id: "gram2", ramo: "Gramática Inglesa II", semestre: 2, prereq: ["gram1"] },
-  { id: "ling", ramo: "Lingüística General", semestre: 2, prereq: ["gram1"] },
+  // -------- Educación Media en Inglés (1º año) --------
+  { id: "fon1", ramo: "Inglés Oral: Pronunciación, Entonación y Expresión I", semestre: 1, prereq: [] },
+  { id: "com1", ramo: "Comunicación Oral y Escrita I", semestre: 1, prereq: [] },
+  { id: "rol", ramo: "El Rol del Profesor en Contexto Educativo", semestre: 1, prereq: [] },
+  { id: "obs1", ramo: "Práctica de Observación I", semestre: 1, prereq: [] },
+  { id: "amb1", ramo: "Creación de un Ambiente en Inglés para Principiantes", semestre: 1, prereq: [] },
+  { id: "recur", ramo: "Creación y Búsqueda de Recursos para el Aula", semestre: 1, prereq: [] },
+  { id: "fon2", ramo: "Inglés Oral: Pronunciación, Entonación y Expresión II", semestre: 2, prereq: ["fon1"] },
+  { id: "com2", ramo: "Comunicación Oral y Escrita II", semestre: 2, prereq: ["com1"] },
+  { id: "obs2", ramo: "Práctica de Observación II", semestre: 2, prereq: ["obs1"] },
+  { id: "teatro", ramo: "Aprendizaje del Inglés a través de Teatro Creativo", semestre: 2, prereq: [] },
+  { id: "estudios1", ramo: "Aprendizaje del Inglés a través de Estudios Culturales I", semestre: 2, prereq: [] },
+  { id: "tec1", ramo: "Uso de la Tecnología para la Comunicación Global I", semestre: 2, prereq: [] },
 
-  // Año 2+ - Pedagogía en Educación Parvularia
-  { id: "lengInf", ramo: "Lenguaje y Comunicación en Educación Parvularia I", semestre: 3, prereq: ["psicoEd"] },
-  { id: "matInf", ramo: "Matemática en Educación Parvularia I", semestre: 3, prereq: [] },
-  { id: "ingOral1", ramo: "Inglés Oral I", semestre: 3, prereq: ["fon2"] },
-  { id: "teatro", ramo: "Aprendizaje del Inglés a través de Teatro Creativo", semestre: 3, prereq: ["fon2"] },
-  { id: "lengInf2", ramo: "Lenguaje y Comunicación en Educación Parvularia II", semestre: 4, prereq: ["lengInf"] },
-  { id: "eval", ramo: "Evaluación en Educación Parvularia", semestre: 4, prereq: ["lengInf"] },
-  { id: "ingEventos", ramo: "Aprendizaje del Inglés a través de Estudios de Eventos Mundiales I", semestre: 4, prereq: ["ingOral1"] },
-  { id: "parvFam", ramo: "Educación Parvularia: El Rol del Educador y la Familia", semestre: 4, prereq: [] }
+  // -------- Educación Parvularia (desde 2º año) --------
+  { id: "cambio-carrera", esCambio: true },
+  { id: "leng1", ramo: "Lenguaje y Comunicación en Educación Parvularia I", semestre: 3, prereq: [] },
+  { id: "mat1", ramo: "Matemática en Educación Parvularia I", semestre: 3, prereq: [] },
+  { id: "lite", ramo: "Literatura y Canciones en Inglés para Párvulos", semestre: 3, prereq: ["fon2"] },
+  { id: "salud", ramo: "Salud y Nutrición del Párvulo", semestre: 3, prereq: [] },
+  { id: "facileng", ramo: "Facilitación de la Adquisición de la Lengua Extranjera en Niños", semestre: 3, prereq: ["fon2"] },
+  { id: "leng2", ramo: "Lenguaje y Comunicación en Educación Parvularia II", semestre: 4, prereq: ["leng1"] },
+  { id: "mat2", ramo: "Matemática en Educación Parvularia II", semestre: 4, prereq: ["mat1"] },
+  { id: "eval", ramo: "Evaluación en Educación Parvularia", semestre: 4, prereq: ["leng1"] },
+  { id: "csoc", ramo: "Ciencias Sociales en Educación Parvularia", semestre: 4, prereq: [] },
+  { id: "diflen", ramo: "Dificultades en el Desarrollo del Lenguaje en el Nivel de Educación Parvularia", semestre: 4, prereq: ["leng1"] },
+  { id: "psico", ramo: "Psicología del Desarrollo y Aprendizaje en la Primera Infancia", semestre: 5, prereq: [] },
+  { id: "musica", ramo: "Música", semestre: 5, prereq: [] },
+  { id: "pracIng", ramo: "Práctica de Inglés", semestre: 5, prereq: ["fon2"] },
+  { id: "pracI1", ramo: "Práctica Intensiva I", semestre: 6, prereq: ["eval"] },
+  { id: "invest1", ramo: "Investigación Cualitativa y Cuantitativa", semestre: 6, prereq: ["eval"] },
+  { id: "introInvest", ramo: "Introducción a la Metodología de la Investigación", semestre: 6, prereq: ["invest1"] },
+  { id: "estudiosNino", ramo: "Aprendizaje del Inglés a través de Estudios de Desarrollo del Niño", semestre: 6, prereq: ["pracIng"] },
+  { id: "cienciasNat", ramo: "Aprendizaje del Inglés a través de Ciencias Naturales", semestre: 6, prereq: ["pracIng"] },
+  { id: "lingEsp", ramo: "Lingüística Española Aplicada", semestre: 7, prereq: [] },
+  { id: "colab", ramo: "Creación de un Ambiente de Colaboración", semestre: 7, prereq: [] },
+  { id: "curr", ramo: "Curriculum y el Desarrollo de la Educación Parvularia en Chile", semestre: 7, prereq: ["leng2"] },
+  { id: "eventos2", ramo: "Aprendizaje del Inglés a través de Estudios de Eventos Mundiales II", semestre: 7, prereq: ["estudiosNino"] },
+  { id: "b2", ramo: "Preparación y Rendición Examen Idioma Inglés MCER B2", semestre: 8, prereq: ["pracIng", "eventos2"] },
+  { id: "inclusion", ramo: "Inclusión en Educación Parvularia", semestre: 8, prereq: ["curr"] },
+  { id: "globales", ramo: "Aprendizaje del Inglés a través de Temas Globales en Educación", semestre: 8, prereq: ["eventos2"] },
+  { id: "visuales", ramo: "Artes Visuales", semestre: 8, prereq: [] },
+  { id: "pracI2", ramo: "Práctica Intensiva II", semestre: 8, prereq: ["pracI1"] },
+  { id: "rolFam", ramo: "Educación Parvularia: El Rol del Educador y la Familia", semestre: 9, prereq: [] },
+  { id: "invest2", ramo: "Práctica de Investigación – Acción", semestre: 9, prereq: ["introInvest"] },
+  { id: "gestion", ramo: "Práctica: Gestión en Educación Parvularia", semestre: 9, prereq: ["pracI2"] },
+  { id: "prof", ramo: "Práctica Profesional", semestre: 9, prereq: ["gestion"] },
+  { id: "proy", ramo: "Proyecto de Grado", semestre: 9, prereq: ["invest2"] }
 ];
 
-let ramosAprobados = [];
+let estadoRamos = {}; // id: 'bloqueado' | 'habilitado' | 'aprobado' | 'reprobado'
 
 function cargarMalla() {
   const contenedor = document.getElementById("mallaContainer");
   contenedor.innerHTML = "";
 
   malla.forEach(ramo => {
-    const habilitado = ramo.prereq.every(pr => ramosAprobados.includes(pr));
-    const aprobado = ramosAprobados.includes(ramo.id);
+    if (ramo.esCambio) {
+      const linea = document.createElement("div");
+      linea.id = "linea-cambio";
+      linea.textContent = "⇨ CAMBIO DE CARRERA ⇨";
+      contenedor.appendChild(linea);
+      return;
+    }
+
+    const estadoActual = calcularEstado(ramo);
+    estadoRamos[ramo.id] = estadoRamos[ramo.id] || estadoActual;
 
     const card = document.createElement("div");
-    card.className = "ramo-card";
-    card.classList.add(aprobado ? "aprobado" : (habilitado ? "habilitado" : "bloqueado"));
+    card.className = "ramo-card " + estadoRamos[ramo.id];
+    card.innerHTML = `<strong>Semestre ${ramo.semestre}</strong><br>${ramo.ramo}`;
 
-    card.innerHTML = `
-      <strong>Semestre ${ramo.semestre}</strong><br>
-      ${ramo.ramo}<br>
-      <button ${!habilitado || aprobado ? 'disabled' : ''} onclick="aprobarRamo('${ramo.id}')">
-        ${aprobado ? "Aprobado" : "Aprobar"}
-      </button>
-    `;
+    card.addEventListener("click", () => {
+      const estados = ["bloqueado", "habilitado", "aprobado", "reprobado"];
+      let actual = estados.indexOf(estadoRamos[ramo.id]);
+      estadoRamos[ramo.id] = estados[(actual + 1) % estados.length];
+      cargarMalla();
+    });
 
     contenedor.appendChild(card);
   });
 }
 
-function aprobarRamo(id) {
-  if (!ramosAprobados.includes(id)) {
-    ramosAprobados.push(id);
-    cargarMalla();
-  }
+function calcularEstado(ramo) {
+  if (ramo.prereq.length === 0) return "habilitado";
+  const todosAprobados = ramo.prereq.every(id => estadoRamos[id] === "aprobado");
+  return todosAprobados ? "habilitado" : "bloqueado";
 }
 
 window.onload = cargarMalla;
