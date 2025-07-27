@@ -1,62 +1,55 @@
+// Asignaturas combinadas: 1er año de Pedagogía en Inglés, luego Parvularia
 const malla = [
-  { nombre: "Introducción a la Bioingeniería Médica", semestre: 1, requisitos: [] },
-  { nombre: "Fundamentos de la Estructura del Cuerpo Humano I", semestre: 1, requisitos: [] },
-  { nombre: "Matemática y Computación I", semestre: 1, requisitos: [] },
-  { nombre: "Física Aplicada", semestre: 1, requisitos: [] },
-  { nombre: "Estructura y Reactividad Molecular", semestre: 1, requisitos: [] },
-  { nombre: "Fundamentos de la Función del Cuerpo Humano I", semestre: 1, requisitos: [] },
+  // Año 1 - Pedagogía en Inglés
+  { id: "fon1", ramo: "Fonética Inglesa I", semestre: 1, prereq: [] },
+  { id: "gram1", ramo: "Gramática Inglesa I", semestre: 1, prereq: [] },
+  { id: "psicoEd", ramo: "Psicología Educacional", semestre: 1, prereq: [] },
+  { id: "fon2", ramo: "Fonética Inglesa II", semestre: 2, prereq: ["fon1"] },
+  { id: "gram2", ramo: "Gramática Inglesa II", semestre: 2, prereq: ["gram1"] },
+  { id: "ling", ramo: "Lingüística General", semestre: 2, prereq: ["gram1"] },
 
-  { nombre: "Fundamentos de la Estructura del Cuerpo Humano II", semestre: 2, requisitos: ["Fundamentos de la Estructura del Cuerpo Humano I"] },
-  { nombre: "Matemática y Computación II", semestre: 2, requisitos: ["Matemática y Computación I"] },
-  { nombre: "Fundamentos de la Función del Cuerpo Humano II", semestre: 2, requisitos: ["Fundamentos de la Función del Cuerpo Humano I"] },
-  { nombre: "Bioquímica I", semestre: 2, requisitos: ["Estructura y Reactividad Molecular"] },
-  { nombre: "Metrología de Variables Biomédicas", semestre: 2, requisitos: [] },
-  { nombre: "Inglés I", semestre: 2, requisitos: [] }
+  // Año 2+ - Pedagogía en Educación Parvularia
+  { id: "lengInf", ramo: "Lenguaje y Comunicación en Educación Parvularia I", semestre: 3, prereq: ["psicoEd"] },
+  { id: "matInf", ramo: "Matemática en Educación Parvularia I", semestre: 3, prereq: [] },
+  { id: "ingOral1", ramo: "Inglés Oral I", semestre: 3, prereq: ["fon2"] },
+  { id: "teatro", ramo: "Aprendizaje del Inglés a través de Teatro Creativo", semestre: 3, prereq: ["fon2"] },
+  { id: "lengInf2", ramo: "Lenguaje y Comunicación en Educación Parvularia II", semestre: 4, prereq: ["lengInf"] },
+  { id: "eval", ramo: "Evaluación en Educación Parvularia", semestre: 4, prereq: ["lengInf"] },
+  { id: "ingEventos", ramo: "Aprendizaje del Inglés a través de Estudios de Eventos Mundiales I", semestre: 4, prereq: ["ingOral1"] },
+  { id: "parvFam", ramo: "Educación Parvularia: El Rol del Educador y la Familia", semestre: 4, prereq: [] }
 ];
 
-const estados = ["pendiente", "cursando", "aprobada"];
-const progreso = JSON.parse(localStorage.getItem("progresoMalla")) || {};
+let ramosAprobados = [];
 
-function puedeDesbloquear(asig) {
-  return asig.requisitos.every(req => progreso[req] === "aprobada");
-}
-
-function renderMalla() {
-  const contenedor = document.getElementById("malla");
+function cargarMalla() {
+  const contenedor = document.getElementById("mallaContainer");
   contenedor.innerHTML = "";
 
-  for (let semestre = 1; semestre <= 3; semestre++) {
-    const bloque = document.createElement("div");
-    bloque.className = "semestre";
-    bloque.innerHTML = `<h2>Semestre ${semestre}</h2>`;
+  malla.forEach(ramo => {
+    const habilitado = ramo.prereq.every(pr => ramosAprobados.includes(pr));
+    const aprobado = ramosAprobados.includes(ramo.id);
 
-    malla.filter(a => a.semestre === semestre).forEach(asig => {
-      const estado = progreso[asig.nombre] || "pendiente";
-      const puede = puedeDesbloquear(asig);
-      const estadoClase = puede || estado === "aprobada" ? estado : "bloqueada";
+    const card = document.createElement("div");
+    card.className = "ramo-card";
+    card.classList.add(aprobado ? "aprobado" : (habilitado ? "habilitado" : "bloqueado"));
 
-      const div = document.createElement("div");
-      div.className = `asignatura ${estadoClase}`;
-      div.textContent = asig.nombre;
+    card.innerHTML = `
+      <strong>Semestre ${ramo.semestre}</strong><br>
+      ${ramo.ramo}<br>
+      <button ${!habilitado || aprobado ? 'disabled' : ''} onclick="aprobarRamo('${ramo.id}')">
+        ${aprobado ? "Aprobado" : "Aprobar"}
+      </button>
+    `;
 
-      if (estadoClase !== "bloqueada") {
-        div.addEventListener("click", () => {
-          let actual = progreso[asig.nombre] || "pendiente";
-          let siguiente = estados[(estados.indexOf(actual) + 1) % estados.length];
-          progreso[asig.nombre] = siguiente;
-          localStorage.setItem("progresoMalla", JSON.stringify(progreso));
-          renderMalla();
-        });
-      } else {
-        div.title = `Requiere: ${asig.requisitos.join(", ")}`;
-      }
+    contenedor.appendChild(card);
+  });
+}
 
-      bloque.appendChild(div);
-    });
-
-    contenedor.appendChild(bloque);
+function aprobarRamo(id) {
+  if (!ramosAprobados.includes(id)) {
+    ramosAprobados.push(id);
+    cargarMalla();
   }
 }
 
-renderMalla();
-
+window.onload = cargarMalla;
