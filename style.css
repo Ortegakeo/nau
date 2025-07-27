@@ -38,4 +38,59 @@ h1 {
   min-height: 120px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: 0.
+  transition: 0.2s;
+  user-select: none;
+  border: 2px solid transparent;
+  touch-action: manipulation; /* importante para móviles */
+}
+
+.ramo-card:hover {
+  transform: scale(1.03);
+}
+
+/* Colores por estado */
+.ramo-card.bloqueado {
+  background: #eeeeee;
+  color: #999;
+  border-color: #ccc;
+}
+
+.ramo-card.habilitado {
+  background: #d0eaff;
+  color: #003366;
+  border-color: #0077cc;
+}
+
+.ramo-card.aprobado {
+  background: #d6f8d6;
+  color: #2e6b2e;
+  border-color: #46c646;
+  text-decoration: line-through;
+}
+
+.ramo-card.reprobado {
+  background: #fbd6d6;
+  color: #660000;
+  border-color: #cc0000;
+}
+
+/* Responsive para móvil */
+@media (max-width: 600px) {
+  #mallaContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ramo-card {
+    width: 90vw;
+    min-height: auto;
+    padding: 12px;
+    font-size: 1em;
+  }
+
+  #linea-cambio {
+    font-size: 1.3em;
+    margin: 20px 0 15px;
+  }
+}
