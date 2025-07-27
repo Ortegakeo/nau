@@ -96,12 +96,20 @@ function cargarMalla() {
     card.className = "ramo-card " + estadoRamos[ramo.id];
     card.innerHTML = `<strong>Semestre ${ramo.semestre}</strong><br>${ramo.ramo}`;
 
-    card.addEventListener("click", () => {
-      const estados = ["bloqueado", "habilitado", "aprobado", "reprobado"];
-      let actual = estados.indexOf(estadoRamos[ramo.id]);
-      estadoRamos[ramo.id] = estados[(actual + 1) % estados.length];
-      cargarMalla();
-    });
+
+
+function toggleEstado(id) {
+  const estados = ["bloqueado", "habilitado", "aprobado", "reprobado"];
+  let actual = estados.indexOf(estadoRamos[id]);
+  estadoRamos[id] = estados[(actual + 1) % estados.length];
+  cargarMalla();
+}
+
+card.addEventListener("click", () => toggleEstado(ramo.id));
+card.addEventListener("touchstart", (e) => {
+  e.preventDefault(); // para evitar doble evento click
+  toggleEstado(ramo.id);
+});
 
     contenedor.appendChild(card);
   });
